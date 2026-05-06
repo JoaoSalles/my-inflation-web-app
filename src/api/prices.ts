@@ -14,8 +14,9 @@ export async function fetchPrices(params?: PricesParams): Promise<Price[]> {
   if (params?.page !== undefined) query.set('page', String(params.page))
   if (params?.pageSize !== undefined) query.set('pageSize', String(params.pageSize))
 
-  const url = `http://localhost:8080/prices${query.size > 0 ? `?${query}` : ''}`
+  const url = `/api/prices${query.size > 0 ? `?${query}` : ''}`
   const response = await fetch(url)
+  console.log("response");
   if (!response.ok) throw new Error(`Failed to fetch prices: ${response.status}`)
   return response.json() as Promise<Price[]>
 }
