@@ -1,10 +1,6 @@
 export interface Price {
-  time: string
-  location: number
+  day: string
+  avgPrice: number
   product: string
-  price: number
-  brand: string
-  quantityBase: string
-  createdAt: string
 }
 

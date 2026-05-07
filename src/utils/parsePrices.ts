@@ -5,8 +5,9 @@ export function parsePrices(data: Price[]): { prices: number[]; times: string[] 
   const times: string[] = []
 
   data.forEach((p) => {
-    prices.push(p.price)
-    times.push(p.time)
+    prices.push(p.avgPrice / 1000)
+    const [year, month, day] = p.day.split('T')[0].split('-')
+    times.push(`${day}/${month}/${year}`)
   })
 
   return { prices, times }
