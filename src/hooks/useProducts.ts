@@ -8,5 +8,7 @@ export function useProducts(): UseQueryResult<PaginatedResponse<Product>> {
   return useQuery({
     queryKey: ['products'],
     queryFn: fetchProducts,
+    staleTime: 1000 * 60 * 30,
+    gcTime: 1000 * 60 * 30,
   })
 }

@@ -4,6 +4,10 @@ import { Chart } from '@src/components/chart'
 import { ProductSelect } from '@src/components/productSelect'
 import { parsePrices } from '@src/utils/parsePrices'
 
+function getCssVar(name: string) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+}
+
 export default function DashboardPage() {
   const [selectedProduct, setSelectedProduct] = useState('')
 
@@ -22,14 +26,14 @@ export default function DashboardPage() {
       {selectedProduct && error && <p>Error loading prices.</p>}
 
       {chartInputs && (
-        <div className="w-full max-w-[500px] max-h-[500px]">
+        <div className="w-full max-w-125 max-h-125">
           <Chart
             labels={chartInputs.times}
             datasets={[
               {
                 data: chartInputs.prices,
-                borderColor: 'rgb(168, 165, 6)',
-                backgroundColor: 'rgba(198, 253, 0, 0.92)',
+                borderColor: getCssVar('--graph-line'),
+                backgroundColor: getCssVar('--graph-point'),
               },
             ]}
             title={selectedProduct}
