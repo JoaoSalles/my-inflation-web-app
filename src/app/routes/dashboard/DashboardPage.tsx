@@ -1,35 +1,41 @@
-import { usePrices } from '@src/hooks/usePrices';
-import { Chart } from '@src/components/chart';
-import { parsePrices } from '@src/utils/parsePrices';
+import { useState } from 'react'
+import { usePrices } from '@src/hooks/usePrices'
+import { Chart } from '@src/components/chart'
+import { ProductSelect } from '@src/components/productSelect'
+import { parsePrices } from '@src/utils/parsePrices'
 
 export default function DashboardPage() {
-    const { data, isPending, error } = usePrices({ product: "achocolatado"});
-    console.log("data", data);
+  const [selectedProduct, setSelectedProduct] = useState('')
 
-    if (isPending) {
-        return (<>loading...</>)
-    }
+  const { data, isPending, error } = usePrices(
+    selectedProduct ? { product: selectedProduct } : undefined
+  )
 
-    if (error) {
-        return (<>error...</>)
-    }
+  const chartInputs = data ? parsePrices(data.data) : null
+  
+  return (
+    <>
+      dashboard
+      <ProductSelect value={selectedProduct} onChange={setSelectedProduct} />
 
-    const chartInputs = parsePrices(data.data);
+      {selectedProduct && isPending && <p>Loading prices…</p>}
+      {selectedProduct && error && <p>Error loading prices.</p>}
 
-    return (<>
-        dashboard
+      {chartInputs && (
         <div className="w-full max-w-[500px] max-h-[500px]">
-            <Chart
-                labels={chartInputs.times}
-                datasets={[
-                    {
-                        data: chartInputs.prices,
-                        borderColor: 'rgb(168, 165, 6)',
-                        backgroundColor: 'rgba(198, 253, 0, 0.92)', 
-                    }
-                ]}
-                title="title test"
-            />
+          <Chart
+            labels={chartInputs.times}
+            datasets={[
+              {
+                data: chartInputs.prices,
+                borderColor: 'rgb(168, 165, 6)',
+                backgroundColor: 'rgba(198, 253, 0, 0.92)',
+              },
+            ]}
+            title={selectedProduct}
+          />
         </div>
-     </>)
+      )}
+    </>
+  )
 }

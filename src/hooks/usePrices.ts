@@ -8,5 +8,6 @@ export function usePrices(params?: PricesParams): UseQueryResult<PaginatedRespon
   return useQuery({
     queryKey: ['prices', params],
     queryFn: () => fetchPrices(params),
+    enabled: !!params?.product,
   })
 }
