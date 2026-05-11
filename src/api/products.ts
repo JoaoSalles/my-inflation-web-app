@@ -1,5 +1,5 @@
-import type { PaginatedResponse } from '@src/types/paginated'
-import type { Product } from '@src/types/product'
+import type { PaginatedResponse } from '@/types/paginated'
+import type { Product } from '@/types/product'
 
 export async function fetchProducts(): Promise<PaginatedResponse<Product>> {
   const response = await fetch('/api/product')

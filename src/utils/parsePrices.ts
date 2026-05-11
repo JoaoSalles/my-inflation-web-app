@@ -1,4 +1,4 @@
-import type { Price } from '@src/types/price'
+import type { Price } from '@/types/price'
 
 export function parsePrices(data: Price[]): { prices: number[]; times: string[] } {
   const prices: number[] = []

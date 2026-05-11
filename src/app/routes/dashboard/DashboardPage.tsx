@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { usePrices } from '@src/hooks/usePrices'
-import { Chart } from '@src/components/chart'
-import { ProductSelect } from '@src/components/productSelect'
-import { parsePrices } from '@src/utils/parsePrices'
+import { usePrices } from '@/hooks/usePrices'
+import { Chart } from '@/components/chart'
+import { ProductSelect } from '@/components/productSelect'
+import { parsePrices } from '@/utils/parsePrices'
 
 function getCssVar(name: string) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
@@ -34,6 +34,7 @@ export default function DashboardPage() {
                 data: chartInputs.prices,
                 borderColor: getCssVar('--graph-line'),
                 backgroundColor: getCssVar('--graph-point'),
+                tension: 0.3,
               },
             ]}
             title={selectedProduct}

@@ -1,11 +1,11 @@
-import { useProducts } from '@src/hooks/useProducts'
+import { useProducts } from '@/hooks/useProducts'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@src/components/ui/select'
+} from '@/components/ui/select'
 
 interface ProductSelectProps {
   value: string
@@ -37,8 +37,8 @@ export function ProductSelect({ value, onChange }: ProductSelectProps) {
 
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger>
-        <SelectValue placeholder="Select a product" />
+      <SelectTrigger className="w-50 truncate mr-1">
+          <SelectValue placeholder="Select a product"/>
       </SelectTrigger>
       <SelectContent>
         {data.data.map((product) => (

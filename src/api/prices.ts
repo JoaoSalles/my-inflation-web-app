@@ -1,5 +1,5 @@
 import type { Price } from '../types/price'
-import type { PaginatedResponse } from '@src/types/paginated';
+import type { PaginatedResponse } from '@/types/paginated';
 
 export interface PricesParams {
   product?: string
