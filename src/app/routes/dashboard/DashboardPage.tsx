@@ -3,6 +3,12 @@ import { usePrices } from '@/hooks/usePrices'
 import { Chart } from '@/components/chart'
 import { ProductSelect } from '@/components/productSelect'
 import { parsePrices } from '@/utils/parsePrices'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+} from "@/components/ui/card"
+
 
 function getCssVar(name: string) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
@@ -11,7 +17,7 @@ function getCssVar(name: string) {
 export default function DashboardPage() {
   const [selectedProduct, setSelectedProduct] = useState('')
 
-  const { data, isPending, error } = usePrices(
+  const { data, isFetching, error } = usePrices(
     selectedProduct ? { product: selectedProduct } : undefined
   )
 
@@ -19,28 +25,45 @@ export default function DashboardPage() {
   
   return (
     <>
-      dashboard
-      <ProductSelect value={selectedProduct} onChange={setSelectedProduct} />
-
-      {selectedProduct && isPending && <p>Loading prices…</p>}
-      {selectedProduct && error && <p>Error loading prices.</p>}
-
-      {chartInputs && (
-        <div className="w-full max-w-125 max-h-125">
-          <Chart
-            labels={chartInputs.times}
-            datasets={[
-              {
-                data: chartInputs.prices,
-                borderColor: getCssVar('--graph-line'),
-                backgroundColor: getCssVar('--graph-point'),
-                tension: 0.3,
-              },
-            ]}
-            title={selectedProduct}
+      <Card
+        className="w-full max-w-2xl mx-auto bg-primary-foreground flex flex-col"
+      >
+        <CardHeader>
+          Historico por produto
+        </CardHeader>
+        <CardContent>
+          <ProductSelect 
+            value={selectedProduct}
+            onChange={setSelectedProduct}
+            className="w-full"
           />
-        </div>
-      )}
+
+
+          <div className="w-full h-64 pt-md flex items-center justify-center">
+            {!selectedProduct && (
+              <p className="text-muted-foreground text-sm">Selecione um produto para ver seu historico.</p>
+            )}
+            {selectedProduct && isFetching && !data && <p className="text-muted-foreground text-sm">Carregando historico...</p>}
+            {selectedProduct && error && <p className="text-muted-foreground text-sm">Error ao carregar historico.</p>}
+            {chartInputs && (
+              <div className="w-full h-full">
+                <Chart
+                  labels={chartInputs.times}
+                  datasets={[
+                    {
+                      data: chartInputs.prices,
+                      borderColor: getCssVar('--graph-line'),
+                      backgroundColor: getCssVar('--graph-point'),
+                      tension: 0.3,
+                    },
+                  ]}
+                />
+              </div>
+            )}
+          </div>
+
+        </CardContent>
+      </Card>
     </>
   )
 }

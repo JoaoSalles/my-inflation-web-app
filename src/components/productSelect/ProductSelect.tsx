@@ -7,12 +7,15 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+import { cn } from "@/lib/cn"
+
 interface ProductSelectProps {
   value: string
   onChange: (productName: string) => void
+  className: string | undefined
 }
 
-export function ProductSelect({ value, onChange }: ProductSelectProps) {
+export function ProductSelect({ value, onChange, className }: ProductSelectProps) {
   const { data, isPending, error } = useProducts()
 
   if (isPending) {
@@ -37,8 +40,8 @@ export function ProductSelect({ value, onChange }: ProductSelectProps) {
 
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="w-50 truncate mr-1">
-          <SelectValue placeholder="Select a product"/>
+      <SelectTrigger className={cn("w-50 truncate mr-1", className)}>
+          <SelectValue placeholder="Selecione um produto"/>
       </SelectTrigger>
       <SelectContent>
         {data.data.map((product) => (

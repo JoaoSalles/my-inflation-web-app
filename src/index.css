@@ -6,6 +6,7 @@
 @theme inline {
   --color-background: var(--bg-surface);
   --color-foreground: var(--text-h);
+  --color-background-selected: var(--bg-surface-selected);
   --color-border: var(--border);
   --color-input: var(--border);
   --color-ring: var(--accent);
@@ -27,6 +28,12 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 48px;
 }
 
 :root {
@@ -60,14 +67,6 @@
     font-size: 16px;
   }
 
-  --sidebar: var(--bg-surface);
-  --sidebar-foreground: var(--text-h);
-  --sidebar-primary: var(--accent);
-  --sidebar-primary-foreground: var(--bg-base);
-  --sidebar-accent: var(--accent-bg);
-  --sidebar-accent-foreground: var(--text-h);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--accent);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -80,7 +79,7 @@
     --border: #2e303a;
     --code-bg: #1f2028;
     --accent: rgb(28, 28, 28);
-    --accent-bg: rgba(28, 28, 28, 0.15);
+    --accent-bg: rgba(0, 0, 0, 0.15);
     --accent-border: rgba(28, 28, 28, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
@@ -130,10 +129,7 @@ p {
 .dark {
   --sidebar: hsl(240 5.9% 10%);
   --sidebar-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-primary: hsl(224.3 76.3% 48%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
   --sidebar-accent: hsl(240 3.7% 15.9%);
-  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }

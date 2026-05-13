@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { fetchPrices, type PricesParams } from '../api/prices'
 import type { Price } from '../types/price'
 import type { PaginatedResponse } from '@/types/paginated';
@@ -9,5 +9,6 @@ export function usePrices(params?: PricesParams): UseQueryResult<PaginatedRespon
     queryKey: ['prices', params],
     queryFn: () => fetchPrices(params),
     enabled: !!params?.product,
+    placeholderData: keepPreviousData,
   })
 }

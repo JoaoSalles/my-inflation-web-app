@@ -9,8 +9,9 @@ import {
   SidebarGroup
 } from "@/components/ui/sidebar"
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Home, Info, User } from "lucide-react";
+import { cn } from "@/lib/cn"
 
 const navItems = [
   {
@@ -26,6 +27,8 @@ const navItems = [
 ]
 
 export function AppSidebar() {
+  const { pathname } = useLocation()
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -38,7 +41,12 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarMenu>
             {navItems.map((item) => (
-              <SidebarMenuItem key={item.name} className="hover:bg-primary-foreground">
+              <SidebarMenuItem key={item.name} 
+                className={cn(
+                  pathname === item.url && "bg-background-selected text-background",
+                  "hover:bg-primary-foreground hover:text-foreground"
+                )}
+              >
                 <SidebarMenuButton asChild tooltip={item.name}>
                   <Link to={item.url}>
                     <item.icon />
