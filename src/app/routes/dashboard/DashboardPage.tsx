@@ -28,7 +28,7 @@ export default function DashboardPage() {
       <Card
         className="w-full max-w-2xl mx-auto bg-primary-foreground flex flex-col"
       >
-        <CardHeader>
+        <CardHeader data-testid="history-card-header">
           Historico por produto
         </CardHeader>
         <CardContent>
@@ -36,17 +36,18 @@ export default function DashboardPage() {
             value={selectedProduct}
             onChange={setSelectedProduct}
             className="w-full"
+            data-testid="select-product"
           />
 
 
           <div className="w-full h-64 pt-md flex items-center justify-center">
             {!selectedProduct && (
-              <p className="text-muted-foreground text-sm">Selecione um produto para ver seu historico.</p>
+              <p className="text-muted-foreground text-sm" data-testid="initial-state-message">Selecione um produto para ver seu historico.</p>
             )}
             {selectedProduct && isFetching && !data && <p className="text-muted-foreground text-sm">Carregando historico...</p>}
             {selectedProduct && error && <p className="text-muted-foreground text-sm">Error ao carregar historico.</p>}
             {chartInputs && (
-              <div className="w-full h-full">
+              <div className="w-full h-full" data-testid="price-chart">
                 <Chart
                   labels={chartInputs.times}
                   datasets={[
