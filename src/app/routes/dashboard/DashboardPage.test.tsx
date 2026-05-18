@@ -52,11 +52,11 @@ describe("Dashboard tests", () => {
 
     expect(
       screen.getByTestId("history-card-header")
-    ).toHaveTextContent("Historico por produto");
+    ).toHaveTextContent("Histórico de preços");
 
     expect(
       screen.getByTestId("initial-state-message")
-    ).toHaveTextContent("Selecione um produto para ver seu historico.");
+    ).toHaveTextContent("Selecione um produto acima para ver o histórico de preços.");
   });
 
   it("should render chart after selecting a product", () => {
