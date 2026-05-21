@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+// import { visualizer } from 'rollup-plugin-visualizer'
 import { resolve } from 'path'
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => ({
+  // add visualizer({ open: true, filename: 'stats.html' }) to check build
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

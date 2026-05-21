@@ -1,14 +1,11 @@
 import { useState } from 'react'
+import { TrendingUp } from 'lucide-react'
 import { usePrices } from '@/hooks/usePrices'
 import { Chart } from '@/components/chart'
 import { ProductSelect } from '@/components/productSelect'
 import { parsePrices } from '@/utils/parsePrices'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card"
-
+import { Card, CardContent } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 
 function getCssVar(name: string) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
@@ -17,44 +14,76 @@ function getCssVar(name: string) {
 export default function DashboardPage() {
   const [selectedProduct, setSelectedProduct] = useState('')
 
-  const { data, isFetching, error } = usePrices(
+  const { data, isFetching, error, refetch } = usePrices(
     selectedProduct ? { product: selectedProduct } : undefined
   )
 
   const chartInputs = data ? parsePrices(data.data) : null
-  
+  const isFirstLoad = isFetching && !data
+  const isRefetching = isFetching && !!data
+
   return (
-    <>
-      <Card
-        className="w-full max-w-2xl mx-auto bg-primary-foreground flex flex-col"
-      >
-        <CardHeader data-testid="history-card-header">
-          Historico por produto
-        </CardHeader>
-        <CardContent>
-          <ProductSelect 
+    <div className="flex flex-col gap-xl">
+      <div className="flex flex-col gap-md">
+        <h1 className="mb-0" data-testid="history-card-header">
+          Histórico de preços
+        </h1>
+        <div className="flex flex-col gap-xs">
+          <span className="text-xs font-medium text-muted-foreground">Produto</span>
+          <ProductSelect
             value={selectedProduct}
             onChange={setSelectedProduct}
-            className="w-full"
-            data-testid="select-product"
+            className="w-72"
           />
+        </div>
+      </div>
 
-
-          <div className="w-full h-64 pt-md flex items-center justify-center">
+      <Card className="w-full">
+        <CardContent className="pt-6">
+          <div className="w-full h-96 relative">
             {!selectedProduct && (
-              <p className="text-muted-foreground text-sm" data-testid="initial-state-message">Selecione um produto para ver seu historico.</p>
+              <div
+                className="absolute inset-0 flex flex-col items-center justify-center gap-sm text-muted-foreground"
+                data-testid="initial-state-message"
+              >
+                <TrendingUp size={32} strokeWidth={1.5} />
+                <p className="text-sm">Selecione um produto acima para ver o histórico de preços.</p>
+              </div>
             )}
-            {selectedProduct && isFetching && !data && <p className="text-muted-foreground text-sm">Carregando historico...</p>}
-            {selectedProduct && error && <p className="text-muted-foreground text-sm">Error ao carregar historico.</p>}
+
+            {isFirstLoad && (
+              <Skeleton className="absolute inset-0 rounded-sm bg-border" />
+            )}
+
+            {selectedProduct && error && !isFetching && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-sm text-muted-foreground">
+                <p className="text-sm">Não foi possível carregar o histórico.</p>
+                <button
+                  onClick={() => void refetch()}
+                  className="text-xs text-foreground underline-offset-2 hover:underline"
+                >
+                  Tente novamente
+                </button>
+              </div>
+            )}
+
             {chartInputs && (
-              <div className="w-full h-full" data-testid="price-chart">
+              <div
+                className="absolute inset-0 transition-opacity duration-200"
+                style={{ opacity: isRefetching ? 0.5 : 1 }}
+                data-testid="price-chart"
+              >
                 <Chart
                   labels={chartInputs.times}
                   datasets={[
                     {
                       data: chartInputs.prices,
                       borderColor: getCssVar('--graph-line'),
-                      backgroundColor: getCssVar('--graph-point'),
+                      backgroundColor: 'rgba(147, 197, 253, 0.1)',
+                      pointBackgroundColor: getCssVar('--graph-point'),
+                      pointRadius: 3,
+                      pointHoverRadius: 5,
+                      fill: true,
                       tension: 0.3,
                     },
                   ]}
@@ -62,9 +91,8 @@ export default function DashboardPage() {
               </div>
             )}
           </div>
-
         </CardContent>
       </Card>
-    </>
+    </div>
   )
 }
