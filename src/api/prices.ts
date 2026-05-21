@@ -1,6 +1,8 @@
 import type { Price } from '../types/price'
 import type { PaginatedResponse } from '@/types/paginated';
 
+const apiUrl = import.meta.env.VITE_BACK_API_URL;
+
 export interface PricesParams {
   product?: string
   from?: string
@@ -17,7 +19,7 @@ export async function fetchPrices(params?: PricesParams): Promise<PaginatedRespo
   if (params?.page !== undefined) query.set('page', String(params.page))
   if (params?.pageSize !== undefined) query.set('pageSize', String(params.pageSize))
 
-  const url = `/api/price/products${query.size > 0 ? `?${query}` : ''}`
+  const url = `${apiUrl}/price/products${query.size > 0 ? `?${query}` : ''}`
   const response = await fetch(url)
   console.log("response");
   if (!response.ok) throw new Error(`Failed to fetch prices: ${response.status}`)
