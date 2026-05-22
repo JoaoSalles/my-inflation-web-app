@@ -4,17 +4,22 @@ import { vi } from 'vitest';
 import { renderWithProviders } from '@/test/renderWithPRoviders'
 import DashboardPage from "./DashboardPage";
 
+const mockProductsResult = vi.hoisted(() => ({
+  data: {
+    data: [
+      { productName: 'Arroz', quantityBase: 'GRAMS' },
+      { productName: 'Feijão', quantityBase: 'GRAMS' },
+    ],
+    hasNext: false,
+    page: 1,
+    pageSize: 10,
+  },
+  isPending: false,
+  error: null,
+}))
+
 vi.mock('@/hooks/useProducts', () => ({
-  useProducts: () => ({
-    data: {
-      data: [{ productName: 'Arroz' }, { productName: 'Feijão' }],
-      hasNext: false,
-      page: 1,
-      pageSize: 10,
-    },
-    isPending: false,
-    error: null,
-  }),
+  useProducts: () => mockProductsResult,
 }))
 
 vi.mock('@/hooks/usePrices', () => ({
@@ -50,6 +55,7 @@ describe("Dashboard integration tests (real ProductSelect)", () => {
     await user.click(screen.getByRole('option', { name: 'Arroz' }))
 
     expect(screen.getByTestId("price-chart")).toBeInTheDocument()
+    expect(screen.getByTestId("disclaimer-unit-message")).toHaveTextContent("Valor referente ao preço médio de 1 Kg do produto")
     expect(screen.queryByTestId("initial-state-message")).not.toBeInTheDocument()
   })
 })

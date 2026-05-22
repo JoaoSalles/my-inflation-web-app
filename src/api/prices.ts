@@ -21,7 +21,6 @@ export async function fetchPrices(params?: PricesParams): Promise<PaginatedRespo
 
   const url = `${apiUrl}/price/products${query.size > 0 ? `?${query}` : ''}`
   const response = await fetch(url)
-  console.log("response");
   if (!response.ok) throw new Error(`Failed to fetch prices: ${response.status}`)
   return response.json() as Promise<PaginatedResponse<Price>>
 }

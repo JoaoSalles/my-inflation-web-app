@@ -6,6 +6,7 @@ import { ProductSelect } from '@/components/productSelect'
 import { parsePrices } from '@/utils/parsePrices'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useProductStore } from '@/store/products'
 
 function getCssVar(name: string) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
@@ -13,6 +14,7 @@ function getCssVar(name: string) {
 
 export default function DashboardPage() {
   const [selectedProduct, setSelectedProduct] = useState('')
+  const { productMap } = useProductStore()
 
   const { data, isFetching, error, refetch } = usePrices(
     selectedProduct ? { product: selectedProduct } : undefined
@@ -22,8 +24,20 @@ export default function DashboardPage() {
   const isFirstLoad = isFetching && !data
   const isRefetching = isFetching && !!data
 
+  const unitMessageDisplay = (selectedProduct: string) => {
+    if (productMap[selectedProduct] == "MILLILITERS") {
+      return "Valor referente ao preço médio de 1 Litro do produto"
+    }
+
+    if (productMap[selectedProduct] == "GRAMS") {
+      return "Valor referente ao preço médio de 1 Kg do produto"
+    }
+
+    return "Valor referente ao preço médio de uma unidade do produto"
+  }
+  
   return (
-    <div className="flex flex-col gap-xl">
+    <div className="flex flex-col gap-md">
       <div className="flex flex-col gap-md">
         <h1 className="mb-0" data-testid="history-card-header">
           Histórico de preços
@@ -36,8 +50,12 @@ export default function DashboardPage() {
             className="w-72"
           />
         </div>
+        <div>
+          <span data-testid="disclaimer-unit-message">
+              {selectedProduct && unitMessageDisplay(selectedProduct)}
+          </span>
+        </div>
       </div>
-
       <Card className="w-full">
         <CardContent className="pt-6">
           <div className="w-full h-96 relative">
