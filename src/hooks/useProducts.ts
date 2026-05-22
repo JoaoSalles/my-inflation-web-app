@@ -8,8 +8,8 @@ export function useProducts(): UseQueryResult<PaginatedResponse<Product>> {
   return useQuery({
     queryKey: ['products'],
     queryFn: fetchProducts,
-    retry: 6,
-    staleTime: 1000 * 60 * 30,
-    gcTime: 1000 * 60 * 30,
+    retry: 2,
+    staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 60 * 24
   })
 }

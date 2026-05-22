@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { useProducts } from '@/hooks/useProducts'
+import { useProductStore } from '@/store/products';
 import {
   Select,
   SelectContent,
@@ -17,6 +19,11 @@ interface ProductSelectProps {
 
 export function ProductSelect({ value, onChange, className }: ProductSelectProps) {
   const { data, isPending, error } = useProducts()
+  const { setProducts } = useProductStore()
+
+  useEffect(() => {
+    if (data?.data) setProducts(data.data)
+  }, [data, setProducts])
 
   if (isPending) {
     return (
@@ -28,7 +35,7 @@ export function ProductSelect({ value, onChange, className }: ProductSelectProps
     )
   }
 
-  if (error) {
+  if (error && !data) {
     return (
       <Select disabled>
         <SelectTrigger>
