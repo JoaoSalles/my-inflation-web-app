@@ -12,7 +12,7 @@ export const useProductStore = create<ProductState>()(
     productMap: {},
     setProducts: (products: Product[]) => set(
       {
-        productMap: Object.fromEntries(products.map((p) => [p.productName, p.quantityBase])),
+        productMap: Object.fromEntries(products.map((p) => [p.name, p.quantityBase])),
       },
       false,
       "setProducts"

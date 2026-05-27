@@ -7,8 +7,8 @@ import DashboardPage from "./DashboardPage";
 const mockProductsResult = vi.hoisted(() => ({
   data: {
     data: [
-      { productName: 'Arroz', quantityBase: 'GRAMS' },
-      { productName: 'Feijão', quantityBase: 'GRAMS' },
+      { name: 'Arroz', quantityBase: 'GRAMS' },
+      { name: 'Feijão', quantityBase: 'GRAMS' },
     ],
     hasNext: false,
     page: 1,

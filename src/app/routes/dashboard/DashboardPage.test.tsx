@@ -6,7 +6,7 @@ import DashboardPage from "./DashboardPage";
 vi.mock('@/hooks/useProducts', () => ({
   useProducts: () => ({
     data: {
-      data: [{ productName: 'Arroz' }, { productName: 'Feijão' }],
+      data: [{ name: 'Arroz' }, { name: 'Feijão' }],
       hasNext: false,
       page: 1,
       pageSize: 10,
