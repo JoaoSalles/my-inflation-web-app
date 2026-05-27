@@ -13,7 +13,7 @@ import { cn } from "@/lib/cn"
 
 interface ProductSelectProps {
   value: string
-  onChange: (productName: string) => void
+  onChange: (name: string) => void
   className: string | undefined
 }
 
@@ -52,8 +52,8 @@ export function ProductSelect({ value, onChange, className }: ProductSelectProps
       </SelectTrigger>
       <SelectContent>
         {data.data.map((product) => (
-          <SelectItem key={product.productName} value={product.productName}>
-            {product.productName}
+          <SelectItem key={product.name} value={product.name}>
+            {product.name}
           </SelectItem>
         ))}
       </SelectContent>

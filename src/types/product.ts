@@ -1,4 +1,4 @@
 export interface Product {
-  productName: string
+  name: string
   quantityBase: string
 }
