@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { TrendingUp } from 'lucide-react'
 import { usePrices } from '@/hooks/usePrices'
 import { Chart } from '@/components/chart'
-import { ProductSelect } from '@/components/productSelect'
+import { ProductCombobox } from '@/components/productCombobox'
 import { parsePrices } from '@/utils/parsePrices'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -44,7 +44,7 @@ export default function DashboardPage() {
         </h1>
         <div className="flex flex-col gap-xs">
           <span className="text-xs font-medium text-muted-foreground">Produto</span>
-          <ProductSelect
+          <ProductCombobox
             value={selectedProduct}
             onChange={setSelectedProduct}
             className="w-72"

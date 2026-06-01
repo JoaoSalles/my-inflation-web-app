@@ -44,7 +44,7 @@ vi.mock('react-chartjs-2', () => ({
   Line: () => <canvas data-testid="line-chart" />,
 }))
 
-describe("Dashboard integration tests (real ProductSelect)", () => {
+describe("Dashboard integration tests (real ProductCombobox)", () => {
   it("should render chart after selecting a product from the dropdown", async () => {
     const user = userEvent.setup()
     renderWithProviders(<DashboardPage />)
