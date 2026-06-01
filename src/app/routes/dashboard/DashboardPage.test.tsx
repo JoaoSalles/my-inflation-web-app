@@ -38,8 +38,8 @@ vi.mock('react-chartjs-2', () => ({
   Line: () => <canvas data-testid="line-chart" />,
 }))
 
-vi.mock('@/components/productSelect', () => ({
-  ProductSelect: ({ onChange }: { onChange: (v: string) => void }) => (
+vi.mock('@/components/productCombobox', () => ({
+  ProductCombobox: ({ onChange }: { onChange: (v: string) => void }) => (
     <button onClick={() => onChange('Arroz')} data-testid="select-product">
       Selecione um produto
     </button>
