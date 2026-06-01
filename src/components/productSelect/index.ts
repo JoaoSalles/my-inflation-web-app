@@ -1,1 +1,0 @@
-export { ProductSelect } from './ProductSelect'

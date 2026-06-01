@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { coverageConfigDefaults } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 // import { visualizer } from 'rollup-plugin-visualizer'
@@ -15,9 +16,12 @@ export default defineConfig(({ command }) => ({
     },
   },
   test: {
-    globals: true, 
+    globals: true,
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
+    coverage: {
+      exclude: ['src/api/**', 'src/components/ui*', ...coverageConfigDefaults.exclude],
+    },
   },
   ...(command === 'serve' && {
     server: {
