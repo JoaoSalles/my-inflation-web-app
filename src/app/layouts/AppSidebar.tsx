@@ -1,4 +1,4 @@
-import { TrendingUp, Home, Info } from 'lucide-react'
+import { TrendingUp, Home, Info, ScrollText } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import {
   Sidebar,
@@ -14,6 +14,7 @@ import { useUserStore } from '@/store/user'
 
 const navItems = [
   { name: 'Início', url: '/', icon: Home },
+  { name: 'Registros', url: '/logs', icon: ScrollText },
   { name: 'Sobre', url: '/about', icon: Info },
 ]
 
